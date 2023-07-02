@@ -10,7 +10,7 @@ onLaunch(() => {
   setting.setTopH(res.top * 2)
   setting.setCapsuleH(res.height * 2)
 
-  let info: any = uni.getSystemInfo()
+  let info: any = uni.getSystemInfoSync()
   let isAppleAndHasLine = false
   if (info.model?.toLowerCase().includes("ip")) {
     const regex = /\d+/g;
@@ -32,4 +32,7 @@ onHide(() => {
   console.log("App Hide");
 });
 </script>
-<style></style>
+
+<style lang="scss">
+@import "uview-plus/index.scss";
+</style>
