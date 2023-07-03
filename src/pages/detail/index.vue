@@ -4,10 +4,11 @@
     <Head :title="show === 'view' ? '详情' : '编辑'"></Head>
     <view class="flex flex-col flex-auto pt-20rpx">
       <DetailViewer @showDelConfirm="showDelConfirm" :show="show" @changeShow="changeShow"></DetailViewer>
-      <DetailEditor :show="show" @changeShow="changeShow"></DetailEditor>
+      <DetailEditor :show="show" :toast="toast" @changeShow="changeShow"></DetailEditor>
     </view>
   </view>
   <DelConfirm ref="delConfirm" @cancel="cancel" @confirm="confirm"></DelConfirm>
+  <Toast ref="toast"></Toast>
 </template>
 
 <script lang="ts" setup>
@@ -16,7 +17,11 @@ import DetailViewer from './components/DetailViewer.vue'
 import DetailEditor from './components/DetailEditor.vue';
 import DelConfirm from './components/DelConfirm.vue'
 import { ref } from 'vue';
+import { del } from '@/api/bill';
+import { useRecordStore } from '@/store/record';
 
+const toast = ref()
+const recordStore = useRecordStore()
 const title = ref<string>('详情')
 const delConfirm = ref()
 const show = ref<ShowMode>('view')
@@ -31,7 +36,16 @@ const changeShow = (key: ShowMode) => {
 
 const cancel = () => {
 }
+
 const confirm = () => {
+  if (recordStore.data.id)
+    del({ id: recordStore.data.id }).then(() => {
+      toast.value.show({
+        text: '删除成功',
+        type: 'success'
+      })
+      uni.navigateBack()
+    })
 }
 
 </script>

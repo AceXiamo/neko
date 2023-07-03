@@ -33,7 +33,7 @@
 
   <Loading :show="loading"></Loading>
   <view class="fixed bottom-100rpx right-50rpx flex flex-col gap-20rpx items-end">
-    <view @click="to('/pages/question/index')"
+    <view @click="toQuestion"
       class="p-20rpx rounded-full shadow-md flex justify-center w-max items-center bg-gray-500 bg-opacity-15">
       <u-icon name="question" size="14" color="#9ca3af"></u-icon>
     </view>
@@ -54,7 +54,7 @@ import HistoryItem from './components/HistoryItem.vue';
 import Recording from './components/Recording.vue';
 import { ref, onMounted } from 'vue'
 import { useSettingStore } from '@/store/setting';
-import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
+import { onShareAppMessage, onShareTimeline, onShow } from '@dcloudio/uni-app';
 import { loginVerify, loginHandle } from "@/ts/global";
 import { listForMonth, save } from "@/api/bill";
 
@@ -67,10 +67,13 @@ onMounted(async () => {
   setTimeout(() => {
     loading.value = false
   }, 2000)
+})
 
+onShow(async () => {
   if (!loginVerify()) {
     await loginHandle()
   }
+
   loadMonthData()
 })
 
@@ -127,9 +130,9 @@ const recordingConfirm = (form: RecordingForm) => {
   })
 }
 
-const to = (url: string) => {
+const toQuestion = () => {
   uni.navigateTo({
-    url
+    url: '/pages/question/index'
   })
 }
 </script>

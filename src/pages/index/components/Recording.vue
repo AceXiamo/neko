@@ -53,8 +53,8 @@
         </view>
       </view>
       <view class="flex justify-end mt-60rpx mx-20rpx">
-        <view class="px-40rpx py-15rpx rounded-sm bg-emerald-600 bg-opacity-20 active-opacity-50">
-          <text class="text-26rpx text-emerald-600" @click="confirm">提交</text>
+        <view class="px-40rpx py-15rpx rounded-sm bg-emerald-600 bg-opacity-20 active-opacity-50" @click="confirm">
+          <text class="text-26rpx text-emerald-600">提交</text>
         </view>
       </view>
     </view>

@@ -4,7 +4,7 @@
     `opaciry-0 pointer-events-none`
   ]" :style="{ opacity: open ? '1' : '0' }">
     <view class="px-28rpx py-18rpx bg-white rounded-md text-26rpx flex items-center gap-10rpx">
-      <u-icon v-if="message.type" name="error-circle-fill" :color="color(message.type)"></u-icon>
+      <u-icon v-if="message.type" :name="message.type === 'success' ? 'checkmark' : 'error-circle-fill'" :color="color(message.type)"></u-icon>
       <text>{{ message.text }}</text>
     </view>
   </view>

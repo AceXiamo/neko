@@ -24,7 +24,7 @@
       </view>
     </view>
     <view class="bg-white flex flex-col p-20rpx gap-30rpx">
-      <view class="flex items-start" v-for="(item, i) in day.details" :key="i" @click="toDetail">
+      <view class="flex items-start" v-for="(item, i) in day.details" :key="i" @click="toDetail(item)">
         <text class="rounded-sm px-12rpx py-6rpx bg-emerald-500 text-24rpx text-white">{{ dayjs(item.recordTime).format('HH:mm') }}</text>
         <view class="flex flex-col gap-5rpx mx-20rpx">
           <view class="flex gap-10rpx items-center">
@@ -48,8 +48,9 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
 import type { PropType } from 'vue'
-import { ref } from 'vue'
+import { useRecordStore } from '@/store/record'
 
+const recordStore = useRecordStore()
 const prop = defineProps({
   day: {
     type: Object as PropType<BillDayData>,
@@ -57,7 +58,8 @@ const prop = defineProps({
   }
 })
 
-const toDetail = () => {
+const toDetail = (item: BillRecord) => {
+  recordStore.data = item
   uni.navigateTo({
     url: '/pages/detail/index'
   })
