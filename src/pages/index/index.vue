@@ -6,7 +6,7 @@
       <Today></Today>
       <view class="flex mx-20rpx items-center">
         <view class="flex items-center gap-10rpx">
-          <text class="text-white text-28rpx active-opacity-50" @click="showMonthSelector = true">{{ yearAndMonth
+          <text class="text-white text-28rpx active-opacity-50 cursor-pointer" @click="showMonthSelector">{{ yearAndMonth
           }}</text>
           <u-icon name="arrow-down-fill" color="#FFFFFF80" size="10"></u-icon>
         </view>
@@ -34,17 +34,39 @@
       <HistoryItem :day="{ day: '06-27', detail: detail }"></HistoryItem>
     </view>
   </view>
-  <MonthSelecor :show="showMonthSelector" :selected="yearAndMonth" @close="monthSelectorClose"></MonthSelecor>
+
+  <Loading :show="loading"></Loading>
+  <view class="fixed bottom-100rpx right-50rpx flex flex-col gap-20rpx items-end">
+    <view
+    @click="to('/pages/question/index')"
+      class="p-20rpx rounded-full shadow-md flex justify-center w-max items-center bg-gray-500 bg-opacity-15">
+      <u-icon name="question" size="14" color="#9ca3af"></u-icon>
+    </view>
+    <view @click="showRecording"
+      class="px-30rpx py-16rpx rounded-full shadow-md flex justify-center gap-10rpx items-center bg-emerald-500 bg-opacity-15">
+      <u-icon name="attach" size="14" color="#55B685"></u-icon>
+      <text class="text-emerald-500 text-26rpx">记一笔</text>
+    </view>
+  </view>
+  <MonthSelector ref="monthSelector" @close="monthSelectorClose"></MonthSelector>
+  <Recording ref="recording" @close="recordingClose"></Recording>
 </template>
 
 <script setup lang="ts">
 import Head from './components/Head.vue'
 import Today from './components/Today.vue';
 import HistoryItem from './components/HistoryItem.vue';
-import { ref } from 'vue'
+import Recording from './components/Recording.vue';
+import { ref, onMounted } from 'vue'
 import { useSettingStore } from '@/store/setting';
 
 const setting = useSettingStore()
+let loading = ref<boolean>(true)
+onMounted(() => {
+  setTimeout(() => {
+    loading.value = false
+  }, 2000)
+})
 
 let detail = ref([
   {
@@ -71,9 +93,30 @@ let detail = ref([
 ])
 
 let yearAndMonth = ref<string>('2023-07')
-let showMonthSelector = ref<boolean>(false)
+
+const monthSelector = ref()
+
+const showMonthSelector = () => {
+  monthSelector.value.showHandle(yearAndMonth.value)
+}
+
 const monthSelectorClose = (time: Month) => {
-  showMonthSelector.value = false
   yearAndMonth.value = `${time.year}-${time.month < 10 ? '0' + time.month : time.month}`
+}
+
+const recording = ref()
+
+const showRecording = () => {
+  recording.value.showHandle()
+}
+
+const recordingClose = () => {
+  console.log('recordingClose')
+}
+
+const to = (url: string) => {
+  uni.navigateTo({
+    url
+  })
 }
 </script>

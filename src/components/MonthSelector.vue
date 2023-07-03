@@ -39,8 +39,8 @@
         <view :class="[
           `h-80rpx rounded-md flex justify-center items-center`,
           activeMonth?.year === item.year && activeMonth?.month === item.month ? 'bg-emerald-500 bg-opacity-10 text-emerald-600' : 'bg-white'
-        ]" v-for="(item, i) in monthArr" :key="i"
-          :style="{ opacity: item.disabled ? '.3' : '1' }" @click="monthClick(item)">
+        ]" v-for="(item, i) in monthArr" :key="i" :style="{ opacity: item.disabled ? '.3' : '1' }"
+          @click="monthClick(item)">
           <text class="text-24rpx">{{ item.month }}</text>
         </view>
       </view>
@@ -50,7 +50,7 @@
 
 <script lang="ts" setup>
 import { useSettingStore } from '@/store/setting';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import dayjs from 'dayjs';
 
 const setting = useSettingStore()
@@ -59,18 +59,9 @@ let activeMonth = ref<Month>()
 let nextFlag = ref<boolean>(false)
 let lastFlag = ref<boolean>(false)
 let className = ref<string>('')
+let show = ref<boolean>(false)
 
 let monthArr = ref<Month[]>([])
-const prop = defineProps({
-  show: {
-    type: Boolean,
-    default: false
-  },
-  selected: {
-    type: String,
-    required: true
-  }
-})
 
 const emit = defineEmits(['close'])
 
@@ -78,16 +69,16 @@ onMounted(() => {
   yearChange()
 })
 
-watch(prop, (val) => {
-  if (val) {
-    let time = dayjs(prop.selected)
-    activeMonth.value = {
-      year: time.year(),
-      month: time.month() + 1,
-      disabled: false
-    }
+const showHandle = (yearAndMonth: string) => {
+  let time = dayjs(yearAndMonth)
+  activeMonth.value = {
+    year: time.year(),
+    month: time.month() + 1,
+    disabled: false
   }
-})
+  show.value = true
+}
+
 
 const monthClick = (item: Month) => {
   if (item.disabled) return
@@ -96,6 +87,7 @@ const monthClick = (item: Month) => {
 }
 
 const closeHandle = () => {
+  show.value = false
   emit('close', activeMonth.value)
 }
 
@@ -118,7 +110,6 @@ const next = () => {
 }
 
 const yearChange = () => {
-
   lastFlag.value = year.value > 1999
   nextFlag.value = year.value < dayjs().year()
 
@@ -131,6 +122,10 @@ const yearChange = () => {
     })
   }
 }
+
+defineExpose({
+  showHandle
+})
 </script>
 
 <style lang="scss" scoped>
