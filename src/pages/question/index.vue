@@ -13,10 +13,11 @@
         <text class="ml-10rpx">关于</text>
       </view>
       <view class="flex flex-col gap-10rpx text-26rpx text-gray-600">
-        <text class="leading-40rpx">这是一个记账工具，区别于传统记账工具，这里加入了 AI 🤖</text>
-        <text class="leading-40rpx">比如你只需要告诉它你花钱做了什么，同时AI也能够对你的月账单、年账单进行分析，并提供一些建议</text>
-        <text class="leading-40rpx">目前初版上线了基础的记账功能，( 记账，日汇总，月汇总，历史</text>
-        <text class="leading-40rpx">( 由于本人是一个在职社畜，时间有限，所以大概并不会有比较稳定的发版时间 🫠，你可以选择加入反馈群以催更 ( ❌ </text>
+        <text class="leading-40rpx">这是一个记账工具</text>
+        <text class="leading-40rpx">区别于传统记账工具，这里加入了 AI 🤖</text>
+        <text class="leading-40rpx">你只需要告诉它你花钱做了什么即可完成记账，同时AI也能够对你的月账单、年账单进行分析，并提供一些建议</text>
+        <text class="leading-40rpx">目前初版上线了基础的记账功能（记账，日汇总，月汇总，历史</text>
+        <text class="leading-40rpx">由于本人是一个在职社畜，时间有限，所以大概并不会有比较稳定的发版时间 🫠，你可以选择加入反馈群以催更（❌ </text>
         <view class="my-10rpx">
           <text class="px-20rpx py-15rpx bg-emerald-500 rounded-sm text-white text-26rpx" @click="viewGroupImage">🏔️ 加入反馈群</text>
         </view>

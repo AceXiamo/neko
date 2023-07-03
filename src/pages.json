@@ -4,6 +4,9 @@
 			"path": "pages/index/index"
 		},
 		{
+			"path": "pages/detail/index"
+		},
+		{
 			"path": "pages/question/index"
 		}
 	],

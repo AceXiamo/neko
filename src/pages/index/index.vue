@@ -10,35 +10,30 @@
           }}</text>
           <u-icon name="arrow-down-fill" color="#FFFFFF80" size="10"></u-icon>
         </view>
-        <view class="ml-auto flex gap-20rpx text-24rpx text-white">
-          <view class="">
+        <view class="ml-auto flex gap-20rpx text-white">
+          <view class="text-24rpx">
             <text>总支出</text>
             <text class="ml-5rpx">¥</text>
-            <text>100</text>
+            <text>{{ monthData.out }}</text>
           </view>
-          <view class="">
+          <view class="text-24rpx">
             <text>总入账</text>
             <text class="ml-5rpx">¥</text>
-            <text>1000</text>
+            <text>{{ monthData.in }}</text>
           </view>
         </view>
       </view>
     </view>
     <view class="flex-auto h-0 overflow-y-auto bg-gray-200 pt-20rpx flex flex-col gap-20rpx" :style="{
-        paddingBottom: setting.isAppleAndHasLine ? 'env(safe-area-inset-bottom)' : '20rpx',
-      }">
-      <HistoryItem :day="{ day: '07-01', detail: detail }"></HistoryItem>
-      <HistoryItem :day="{ day: '06-30', detail: detail }"></HistoryItem>
-      <HistoryItem :day="{ day: '06-29', detail: detail }"></HistoryItem>
-      <HistoryItem :day="{ day: '06-28', detail: detail }"></HistoryItem>
-      <HistoryItem :day="{ day: '06-27', detail: detail }"></HistoryItem>
+      paddingBottom: setting.isAppleAndHasLine ? 'env(safe-area-inset-bottom)' : '20rpx',
+    }">
+      <HistoryItem v-for="(item, i) in monthData.days" :key="i" :day="item"></HistoryItem>
     </view>
   </view>
 
   <Loading :show="loading"></Loading>
   <view class="fixed bottom-100rpx right-50rpx flex flex-col gap-20rpx items-end">
-    <view
-    @click="to('/pages/question/index')"
+    <view @click="to('/pages/question/index')"
       class="p-20rpx rounded-full shadow-md flex justify-center w-max items-center bg-gray-500 bg-opacity-15">
       <u-icon name="question" size="14" color="#9ca3af"></u-icon>
     </view>
@@ -49,7 +44,7 @@
     </view>
   </view>
   <MonthSelector ref="monthSelector" @close="monthSelectorClose"></MonthSelector>
-  <Recording ref="recording" @close="recordingClose"></Recording>
+  <Recording ref="recording" @confirm="recordingConfirm"></Recording>
 </template>
 
 <script setup lang="ts">
@@ -59,40 +54,50 @@ import HistoryItem from './components/HistoryItem.vue';
 import Recording from './components/Recording.vue';
 import { ref, onMounted } from 'vue'
 import { useSettingStore } from '@/store/setting';
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
+import { loginVerify, loginHandle } from "@/ts/global";
+import { listForMonth, save } from "@/api/bill";
 
 const setting = useSettingStore()
 let loading = ref<boolean>(true)
-onMounted(() => {
+let yearAndMonth = ref<string>('2023-07')
+let monthData = ref<BillMonthData>({})
+
+onMounted(async () => {
   setTimeout(() => {
     loading.value = false
   }, 2000)
+
+  if (!loginVerify()) {
+    await loginHandle()
+  }
+  loadMonthData()
 })
 
-let detail = ref([
-  {
-    "icon": "☕️",
-    "price": "20",
-    "desc": "一杯咖啡",
-    "ai_say": "喝杯咖啡提提神，但这价格稍微有点贵了哦！",
-    "time": "12:00"
-  },
-  {
-    "icon": "🍰",
-    "price": "34",
-    "desc": "甜点",
-    "ai_say": "嗯，吃甜点可是个不错的享受！不过这次的甜点有点小贵呢，下次可以考虑其他选择。",
-    "time": "13:00"
-  },
-  {
-    "icon": "💧",
-    "price": "2",
-    "desc": "矿泉水",
-    "ai_say": "矿泉水是个好选择，保持身体 hydrated！而且价格也非常合理。",
-    "time": "14:00"
-  }
-])
+const loadMonthData = () => {
+  if (!loading.value) uni.showLoading()
+  listForMonth({ month: yearAndMonth.value }).then(res => {
+    monthData.value = res.data
+  }).finally(() => {
+    if (!loading.value) uni.hideLoading()
+  })
+}
 
-let yearAndMonth = ref<string>('2023-07')
+onShareAppMessage(() => {
+  return {
+    title: '🐱 Neko记账',
+    path: '/pages/index/index',
+    imageUrl: 'https://image.qwq.link/images/2023/06/03/FwavAh0aMAk60Tp.jpg'
+  }
+})
+
+onShareTimeline(() => {
+  return {
+    title: '🐱 Neko记账',
+    path: '/pages/index/index',
+    imageUrl: 'https://image.qwq.link/images/2023/06/03/FwavAh0aMAk60Tp.jpg'
+  }
+})
 
 const monthSelector = ref()
 
@@ -101,7 +106,10 @@ const showMonthSelector = () => {
 }
 
 const monthSelectorClose = (time: Month) => {
-  yearAndMonth.value = `${time.year}-${time.month < 10 ? '0' + time.month : time.month}`
+  let day = `${time.year}-${time.month < 10 ? '0' + time.month : time.month}`
+  if (day === yearAndMonth.value) return
+  yearAndMonth.value = day
+  loadMonthData()
 }
 
 const recording = ref()
@@ -110,8 +118,13 @@ const showRecording = () => {
   recording.value.showHandle()
 }
 
-const recordingClose = () => {
-  console.log('recordingClose')
+const recordingConfirm = (form: RecordingForm) => {
+  uni.showLoading()
+  save(form).then(() => {
+    loadMonthData()
+  }).then(() => {
+    uni.hideLoading()
+  })
 }
 
 const to = (url: string) => {

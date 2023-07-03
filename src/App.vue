@@ -4,7 +4,7 @@ import { useSettingStore } from '@/store/setting'
 
 const setting = useSettingStore()
 
-onLaunch(() => {
+onLaunch(async () => {
   let res = uni.getMenuButtonBoundingClientRect()
   // to rpx
   setting.setTopH(res.top * 2)

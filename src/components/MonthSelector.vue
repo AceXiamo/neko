@@ -1,10 +1,11 @@
 <template>
-  <view
-    class="fixed bottom-0 flex flex-col justify-end top-0 left-0 right-0 bg-black bg-opacity-50 z-2 transition-all duration-300"
-    :style="{
-      opacity: show ? '1' : '0',
-      pointerEvents: show ? 'auto' : 'none'
-    }" @click="closeHandle">
+  <view :class="[
+    `fixed bottom-0 flex flex-col justify-end top-0 left-0 right-0 bg-black bg-opacity-50 z-2 transition-all duration-300`,
+    `opacity-0 pointer-events-none`
+  ]" :style="{
+  opacity: show ? '1' : '0',
+  pointerEvents: show ? 'auto' : 'none'
+}" @click="closeHandle">
     <view :class="[
       `bg-gray-100 flex flex-col pt-20rpx transition-all duration-300`,
     ]" :style="{

@@ -9,7 +9,7 @@
           </view>
           <view>
             <text class="ml-10rpx text-20rpx">¥</text>
-            <text class="ml-5rpx text-24rpx">200</text>
+            <text class="ml-5rpx text-24rpx">{{ day.out }}</text>
           </view>
         </view>
         <view class="flex items-center">
@@ -18,23 +18,23 @@
           </view>
           <view>
             <text class="ml-10rpx text-20rpx">¥</text>
-            <text class="ml-5rpx text-24rpx">200</text>
+            <text class="ml-5rpx text-24rpx">{{ day.in }}</text>
           </view>
         </view>
       </view>
     </view>
     <view class="bg-white flex flex-col p-20rpx gap-30rpx">
-      <view class="flex items-start" v-for="(item, i) in day.detail" :key="i">
-        <text class="rounded-sm px-12rpx py-6rpx bg-emerald-500 text-24rpx text-white">12:00</text>
+      <view class="flex items-start" v-for="(item, i) in day.details" :key="i" @click="toDetail">
+        <text class="rounded-sm px-12rpx py-6rpx bg-emerald-500 text-24rpx text-white">{{ dayjs(item.recordTime).format('HH:mm') }}</text>
         <view class="flex flex-col gap-5rpx mx-20rpx">
           <view class="flex gap-10rpx items-center">
             <text class="text-26rpx">{{ item.icon }}</text>
-            <text class="text-26rpx">{{ item.desc }}</text>
+            <text class="text-26rpx">{{ item.remark }}</text>
           </view>
           <view class="text-22rpx text-gray-400">
-            <text>{{ item.ai_say }}</text>
+            <text>{{ item.aiSay }}</text>
           </view>
-          <view class="h-1rpx bg-gray-200 mt-30rpx" v-if="i < (day.detail.length - 1)"></view>
+          <view class="h-1rpx bg-gray-200 mt-30rpx" v-if="i < (day.details.length - 1)"></view>
         </view>
         <view class="ml-auto text-28rpx">
           <text>¥</text>
@@ -46,25 +46,21 @@
 </template>
 
 <script lang="ts" setup>
+import dayjs from 'dayjs'
 import type { PropType } from 'vue'
 import { ref } from 'vue'
 
-type Day = {
-  day: string
-  detail: {
-    icon: string
-    price: string
-    desc: string
-    ai_say: string
-    time: string
-  }[]
-}
-
 const prop = defineProps({
   day: {
-    type: Object as PropType<Day>,
+    type: Object as PropType<BillDayData>,
     default: () => []
   }
 })
+
+const toDetail = () => {
+  uni.navigateTo({
+    url: '/pages/detail/index'
+  })
+}
 </script>
 

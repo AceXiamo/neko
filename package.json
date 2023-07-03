@@ -58,6 +58,7 @@
     "jest-environment-node": "27.5.1",
     "pinia": "2.0.36",
     "postcss": "^8.4.21",
+    "qs": "^6.11.2",
     "uview-plus": "^3.1.32",
     "vue": "3.2.47",
     "vue-i18n": "^9.1.9"
