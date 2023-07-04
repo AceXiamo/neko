@@ -38,14 +38,18 @@ const cancel = () => {
 }
 
 const confirm = () => {
-  if (recordStore.data.id)
+  if (recordStore.data.id) {
     del({ id: recordStore.data.id }).then(() => {
+      uni.hideLoading()
       toast.value.show({
         text: '删除成功',
         type: 'success'
       })
-      uni.navigateBack()
+      setTimeout(() => {
+        uni.navigateBack()
+      }, 1000)
     })
+  }
 }
 
 </script>

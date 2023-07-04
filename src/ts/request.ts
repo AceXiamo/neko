@@ -3,7 +3,7 @@ import { loginHandle } from "@/ts/global";
 import { useUserStore } from '@/store/user';
 
 const userStore = useUserStore()
-const domain = "xm233.mynatapp.cc"
+const domain = "nekoai.xiamoqwq.com"
 const host = "https://" + domain
 
 const setAuth = (options: any) => {

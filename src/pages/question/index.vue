@@ -72,7 +72,7 @@ import Head from "./components/Head.vue";
 const viewGroupImage = () => {
   uni.previewImage({
     urls: [
-      "https://image.qwq.link/images/2023/06/20/twitter_Aoitori_775_20230619-105346_1670746688787742721_photo_pixian.png"
+      "https://image.qwq.link/images/2023/07/04/d720ce73d8dbb156ffdef79113ce451.jpg"
     ]
   });
 }

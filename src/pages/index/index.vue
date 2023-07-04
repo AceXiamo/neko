@@ -57,7 +57,10 @@ import { useSettingStore } from '@/store/setting';
 import { onShareAppMessage, onShareTimeline, onShow } from '@dcloudio/uni-app';
 import { loginVerify, loginHandle } from "@/ts/global";
 import { listForMonth, save } from "@/api/bill";
+import { useRecordStore } from '@/store/record';
+import dayjs from 'dayjs';
 
+const recordStore = useRecordStore()
 const setting = useSettingStore()
 let loading = ref<boolean>(true)
 let yearAndMonth = ref<string>('2023-07')
@@ -78,11 +81,23 @@ onShow(async () => {
 })
 
 const loadMonthData = () => {
-  if (!loading.value) uni.showLoading()
   listForMonth({ month: yearAndMonth.value }).then(res => {
     monthData.value = res.data
-  }).finally(() => {
-    if (!loading.value) uni.hideLoading()
+
+    if (res.data.days) {
+      recordStore.today = res.data.days[0] || {
+        date: dayjs().format('YYYY-MM-DD'),
+        in: 0,
+        out: 0,
+        records: []
+      }
+      recordStore.lastDay = res.data.days[1] || {
+        date: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
+        in: 0,
+        out: 0,
+        records: []
+      }
+    }
   })
 }
 
