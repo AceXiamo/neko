@@ -99,21 +99,6 @@ const loadTodayData = () => {
 const loadMonthData = () => {
   listForMonth({ month: yearAndMonth.value }).then(res => {
     monthData.value = res.data
-
-    if (res.data.days) {
-      recordStore.today = res.data.days[0] || {
-        date: dayjs().format('YYYY-MM-DD'),
-        in: 0,
-        out: 0,
-        records: []
-      }
-      recordStore.lastDay = res.data.days[1] || {
-        date: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
-        in: 0,
-        out: 0,
-        records: []
-      }
-    }
   })
 }
 
