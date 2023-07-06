@@ -45,6 +45,7 @@
   </view>
   <MonthSelector ref="monthSelector" @close="monthSelectorClose"></MonthSelector>
   <Recording ref="recording" @confirm="recordingConfirm"></Recording>
+  <Toast></Toast>
 </template>
 
 <script setup lang="ts">
@@ -60,6 +61,7 @@ import { listForMonth, save, todayData } from "@/api/bill";
 import { useRecordStore } from '@/store/record';
 import dayjs from 'dayjs';
 
+const toast = ref()
 const recordStore = useRecordStore()
 const setting = useSettingStore()
 let loading = ref<boolean>(true)
@@ -93,12 +95,22 @@ const load = () => {
 const loadTodayData = () => {
   todayData().then(res => {
     today.value = res.data
+  }).catch(() => {
+    toast.value.show({
+      text: '连接超时，请稍后再试',
+      type: 'error'
+    })
   })
 }
 
 const loadMonthData = () => {
   listForMonth({ month: yearAndMonth.value }).then(res => {
     monthData.value = res.data
+  }).catch(() => {
+    toast.value.show({
+      text: '连接超时，请稍后再试',
+      type: 'error'
+    })
   })
 }
 
@@ -143,6 +155,11 @@ const recordingConfirm = (form: RecordingForm) => {
     load()
   }).then(() => {
     uni.hideLoading()
+  }).catch(() => {
+    toast.value.show({
+      text: '和某不知名服务间的通信发生错误，请重试 🥲',
+      type: 'error'
+    })
   })
 }
 
