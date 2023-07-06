@@ -62,4 +62,10 @@ type BillMonthData = {
   days?: BillDayData[]
 }
 
+type BillToDayData = {
+  out: number
+  in: number
+  withLastDay: number
+}
+
 

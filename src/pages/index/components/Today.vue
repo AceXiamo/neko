@@ -10,7 +10,7 @@
         <text class="text-26rpx text-gray-600">支出</text>
         <view class="">
           <text class="text-22rpx text-green-400">¥</text>
-          <text class="text-26rpx text-green-500 ml-5rpx">{{ recordStore.today.out }}</text>
+          <text class="text-26rpx text-green-500 ml-5rpx">{{ today.out }}</text>
         </view>
       </view>
 
@@ -18,7 +18,7 @@
         <text class="text-26rpx text-gray-600">收入</text>
         <view class="">
           <text class="text-20rpx text-red-400">¥</text>
-          <text class="text-26rpx text-red-500 ml-5rpx">{{ recordStore.today.in }}</text>
+          <text class="text-26rpx text-red-500 ml-5rpx">{{ today.in }}</text>
         </view>
       </view>
 
@@ -28,12 +28,12 @@
           <text class="text-green-500 text-20rpx">(支出)</text>
         </view>
         <view class="">
-          <text class="text-20rpx" :style="{
-            color: (recordStore.today.out - recordStore.lastDay.out) > 0 ? 'rgb(248, 113, 113)' : 'rgb(52, 211, 153)'
-          }">{{ (recordStore.today.out - recordStore.lastDay.out) > 0 ? '+' : '-' }}</text>
-          <text class="text-26rpx ml-5rpx" :style="{
-            color: (recordStore.today.out - recordStore.lastDay.out) > 0 ? 'rgb(248, 113, 113)' : 'rgb(52, 211, 153)'
-          }">{{ recordStore.today.out - recordStore.lastDay.out }}</text>
+          <text class="text-26rpx" :style="{
+            color: today.withLastDay > 0 ? 'rgb(248, 113, 113)' : 'rgb(52, 211, 153)'
+          }">{{ today.withLastDay > 0 ? '+' : '' }}</text>
+          <text class="text-26rpx" :style="{
+            color: today.withLastDay > 0 ? 'rgb(248, 113, 113)' : 'rgb(52, 211, 153)'
+          }">{{ today.withLastDay }}</text>
           <text class="text-20rpx text-red-400 ml-5rpx"></text>
         </view>
       </view>
@@ -42,9 +42,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useRecordStore } from '@/store/record';
+import type { PropType } from 'vue';
 
-const recordStore = useRecordStore()
+const prop = defineProps({
+  today: {
+    type: Object as PropType<BillToDayData>,
+    required: true
+  }
+})
 </script>
 

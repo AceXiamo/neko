@@ -4,6 +4,10 @@ export const listForMonth = (params: { month: string }) : Promise<ResponseData<B
   return request.post(host + "/bill/listForMonth", params)
 }
 
+export const todayData = () : Promise<ResponseData<BillToDayData>> => {
+  return request.post(host + "/bill/todayData")
+}
+
 export const save = (params: RecordingForm) : Promise<ResponseData<BillRecord>> => {
   return request.post(host + "/bill/save", params)
 }

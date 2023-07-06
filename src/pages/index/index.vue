@@ -3,7 +3,7 @@
 
     <Head></Head>
     <view class="flex flex-col gap-20rpx pb-20rpx shadow-md z-1">
-      <Today></Today>
+      <Today :today="today"></Today>
       <view class="flex mx-20rpx items-center">
         <view class="flex items-center gap-10rpx">
           <text class="text-white text-28rpx active-opacity-50 cursor-pointer" @click="showMonthSelector">{{ yearAndMonth
@@ -56,7 +56,7 @@ import { ref, onMounted } from 'vue'
 import { useSettingStore } from '@/store/setting';
 import { onShareAppMessage, onShareTimeline, onShow } from '@dcloudio/uni-app';
 import { loginVerify, loginHandle } from "@/ts/global";
-import { listForMonth, save } from "@/api/bill";
+import { listForMonth, save, todayData } from "@/api/bill";
 import { useRecordStore } from '@/store/record';
 import dayjs from 'dayjs';
 
@@ -65,6 +65,11 @@ const setting = useSettingStore()
 let loading = ref<boolean>(true)
 let yearAndMonth = ref<string>('2023-07')
 let monthData = ref<BillMonthData>({})
+let today = ref<BillToDayData>({
+  in: 0,
+  out: 0,
+  withLastDay: 0
+})
 
 onMounted(async () => {
   setTimeout(() => {
@@ -77,8 +82,19 @@ onShow(async () => {
     await loginHandle()
   }
 
-  loadMonthData()
+  load()
 })
+
+const load = () => {
+  loadMonthData()
+  loadTodayData()
+}
+
+const loadTodayData = () => {
+  todayData().then(res => {
+    today.value = res.data
+  })
+}
 
 const loadMonthData = () => {
   listForMonth({ month: yearAndMonth.value }).then(res => {
@@ -139,7 +155,7 @@ const showRecording = () => {
 const recordingConfirm = (form: RecordingForm) => {
   uni.showLoading()
   save(form).then(() => {
-    loadMonthData()
+    load()
   }).then(() => {
     uni.hideLoading()
   })

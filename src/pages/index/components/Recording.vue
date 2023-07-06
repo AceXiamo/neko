@@ -95,6 +95,7 @@ const closeHandle = () => {
   }
   date.value = dayjs().valueOf()
   show.value = false
+  form.value.chat = ''
 }
 
 let height = ref(0)
