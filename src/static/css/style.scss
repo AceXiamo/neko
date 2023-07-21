@@ -23,3 +23,9 @@ page {
     opacity: 0.5;
   }
 }
+
+.active-bg {
+  &:active {
+    background-color: rgba(0, 0, 0, .05);
+  }
+}

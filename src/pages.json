@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "pages/question/index"
+		},
+		{
+			"path": "pages/statistics/index"
 		}
 	],
 	"easycom": {

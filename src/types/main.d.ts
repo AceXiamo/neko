@@ -68,4 +68,16 @@ type BillToDayData = {
   withLastDay: number
 }
 
+type BillStatisticsData = {
+  out?: number
+  in?: number
+  inDetail?: BillTypeData[]
+  outDetail?: BillTypeData[]
+}
+
+type BillTypeData = {
+  typeId: number
+  typeName: string
+  price: number 
+}
 

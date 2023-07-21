@@ -37,6 +37,11 @@
       class="p-20rpx rounded-full shadow-md flex justify-center w-max items-center bg-gray-500 bg-opacity-15">
       <u-icon name="question" size="14" color="#9ca3af"></u-icon>
     </view>
+    <view @click="showStatistics"
+      class="px-30rpx py-16rpx rounded-full shadow-md flex justify-center gap-10rpx items-center bg-cyan-500 bg-opacity-15">
+      <u-icon name="coupon" size="14" color="#06b6d4"></u-icon>
+      <text class="text-cyan-500 text-26rpx">统计</text>
+    </view>
     <view @click="showRecording"
       class="px-30rpx py-16rpx rounded-full shadow-md flex justify-center gap-10rpx items-center bg-emerald-500 bg-opacity-15">
       <u-icon name="attach" size="14" color="#55B685"></u-icon>
@@ -45,7 +50,7 @@
   </view>
   <MonthSelector ref="monthSelector" @close="monthSelectorClose"></MonthSelector>
   <Recording ref="recording" @confirm="recordingConfirm"></Recording>
-  <Toast></Toast>
+  <Toast ref="toast"></Toast>
 </template>
 
 <script setup lang="ts">
@@ -76,7 +81,7 @@ let today = ref<BillToDayData>({
 onMounted(async () => {
   setTimeout(() => {
     loading.value = false
-  }, 2000)
+  }, 1000)
 })
 
 onShow(async () => {
@@ -166,6 +171,12 @@ const recordingConfirm = (form: RecordingForm) => {
 const toQuestion = () => {
   uni.navigateTo({
     url: '/pages/question/index'
+  })
+}
+
+const showStatistics = () => {
+  uni.navigateTo({
+    url: '/pages/statistics/index'
   })
 }
 </script>

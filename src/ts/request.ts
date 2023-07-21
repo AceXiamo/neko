@@ -5,12 +5,17 @@ import { useUserStore } from '@/store/user';
 const userStore = useUserStore()
 const mode = import.meta.env.MODE
 let domain;
+let host;
 if (mode === 'development') {
     domain = "localhost:8080"
+    host = "http://" + domain
 } else {
     domain = "nekoai.xiamoqwq.com"
+    host = "https://" + domain
 }
-const host = "http://" + domain
+
+domain = "nekoai.xiamoqwq.com"
+host = "https://" + domain
 
 const setAuth = (options: any) => {
     let user = userStore.user
@@ -46,7 +51,7 @@ const request = {
     },
     post: (url: string, params?: any, data?: any, toast?: any): Promise<any> => {
         return new Promise((resolve, reject) => {
-           let options: any = {
+            let options: any = {
                 url: '',
                 method: "POST",
                 timeout: 30000,
