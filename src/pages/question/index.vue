@@ -19,7 +19,7 @@
         <text class="leading-40rpx">目前初版上线了基础的记账功能（记账，日汇总，月汇总，历史</text>
         <text class="leading-40rpx">由于本人是一个在职社畜，时间有限，所以大概并不会有比较稳定的发版时间 🫠，你可以选择加入反馈群以催更（❌ </text>
         <view class="my-10rpx">
-          <text class="px-20rpx py-15rpx bg-emerald-500 rounded-sm text-white text-26rpx" @click="viewGroupImage">🏔️ 加入反馈群</text>
+          <text class="px-20rpx py-15rpx bg-emerald-500 rounded-sm text-white text-26rpx" @click="viewGroupImage">🏔️ 联系我</text>
         </view>
       </view>
       <view class="text-32rpx">
@@ -72,7 +72,7 @@ import Head from "./components/Head.vue";
 const viewGroupImage = () => {
   uni.previewImage({
     urls: [
-      "https://image.qwq.link/images/2023/07/04/d720ce73d8dbb156ffdef79113ce451.jpg"
+      "https://image.qwq.link/images/2023/03/31/681A8A87-7450-7F90-D066-DFF0B8CF0C05.jpg"
     ]
   });
 }
