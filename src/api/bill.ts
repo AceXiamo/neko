@@ -12,8 +12,8 @@ export const statistics = (params: { date: string }): Promise<ResponseData<BillS
   return request.post(host + "/bill/statistics", params)
 }
 
-export const save = (params: RecordingForm): Promise<ResponseData<BillRecord>> => {
-  return request.post(host + "/bill/save", params)
+export const save = (data: RecordingForm): Promise<ResponseData<BillRecord>> => {
+  return request.post(host + "/bill/save", null, data)
 }
 
 export const update = (data: BillRecord): Promise<ResponseData<any>> => {

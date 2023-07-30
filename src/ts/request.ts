@@ -4,8 +4,8 @@ import { useUserStore } from '@/store/user';
 
 const userStore = useUserStore()
 const mode = import.meta.env.MODE
-let domain;
-let host;
+let domain: string;
+let host: string;
 if (mode === 'development') {
     domain = "localhost:8080"
     host = "http://" + domain

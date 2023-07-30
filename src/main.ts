@@ -3,6 +3,7 @@ import App from "./App.vue";
 import uviewPlus from 'uview-plus';
 
 import '@/static/css/style.scss'
+import 'animate.css';
 
 // pinia
 import { createPinia } from 'pinia'

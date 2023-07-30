@@ -16,7 +16,7 @@ const getLoginUser = () => {
     return uni.getStorageSync("user")
 }
 
-const avatarHandle = (path: string) => {
+const fileUrlReplace = (path: string) => {
     return host + '/file/view' + path
 }
 
@@ -34,4 +34,4 @@ const loginHandle = () => {
     })
 }
 
-export { saveLoginRes, loginVerify, getLoginUser, avatarHandle, loginHandle }
+export { saveLoginRes, loginVerify, getLoginUser, fileUrlReplace, loginHandle }

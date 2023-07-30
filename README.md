@@ -1,16 +1,4 @@
-# uni-vue3-template
+# Neko记账
 
-## Project setup
-```
-pnpm install
-```
+## 
 
-### Compiles and hot-reloads for development
-```
-pnpm run dev:mp-weixin
-```
-
-### Compiles and minifies for production
-```
-pnpm run build:mp-weixin
-```

@@ -13,6 +13,8 @@ type LoginReqData = {
 type RecordingForm = {
   chat: string
   day: string
+  images: string[]
+  hasAiSay?: boolean
 }
 
 type ResponseData<T> = {
@@ -47,6 +49,8 @@ type BillRecord = {
   createTime?: string
   updateTime?: string
   wxUserId?: string
+  images?: string
+  imageList?: string[]
 }
 
 type BillDayData = {
@@ -81,3 +85,9 @@ type BillTypeData = {
   price: number 
 }
 
+type UploadStatus = 'wait' | 'run' | 'finish'
+
+type ImageItem = {
+  url: string
+  status: UploadStatus
+}
