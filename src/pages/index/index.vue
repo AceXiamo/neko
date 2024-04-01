@@ -70,7 +70,7 @@ const toast = ref()
 const recordStore = useRecordStore()
 const setting = useSettingStore()
 let loading = ref<boolean>(true)
-let yearAndMonth = ref<string>('2023-07')
+let yearAndMonth = ref<string>(dayjs().format('YYYY-MM'))
 let monthData = ref<BillMonthData>({})
 let today = ref<BillToDayData>({
   in: 0,
