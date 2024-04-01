@@ -1,17 +1,23 @@
 <template>
-  <view :class="[
-    `fixed bottom-0 flex flex-col justify-end top-0 left-0 right-0 bg-black bg-opacity-50 z-2 transition-all duration-300`,
-    `opacity-0 pointer-events-none`
-  ]" :style="{
-  opacity: show ? '1' : '0',
-  pointerEvents: show ? 'auto' : 'none'
-}" @click="closeHandle">
-    <view :class="[
-      `bg-gray-100 flex flex-col pt-20rpx transition-all duration-300`,
-    ]" :style="{
-  paddingBottom: setting.isAppleAndHasLine ? 'env(safe-area-inset-bottom)' : '20rpx',
-  transform: show ? 'translateY(0)' : 'translateY(100%)'
-}" @click.stop>
+  <view
+    :class="[
+      `fixed bottom-0 flex flex-col justify-end top-0 left-0 right-0 bg-black bg-opacity-50 z-2 transition-all duration-300`,
+      `opacity-0 pointer-events-none`
+    ]"
+    :style="{
+      opacity: show ? '1' : '0',
+      pointerEvents: show ? 'auto' : 'none'
+    }"
+    @click="closeHandle"
+  >
+    <view
+      :class="[`bg-gray-100 flex flex-col pt-20rpx transition-all duration-300`]"
+      :style="{
+        paddingBottom: setting.isAppleAndHasLine ? 'env(safe-area-inset-bottom)' : '20rpx',
+        transform: show ? 'translateY(0)' : 'translateY(100%)'
+      }"
+      @click.stop
+    >
       <view class="relative flex w-full justify-center items-center">
         <view class="absolute left-20rpx" @click="closeHandle">
           <u-icon name="close" color="#64748b"></u-icon>
@@ -20,28 +26,38 @@
       </view>
 
       <view class="flex justify-start gap-30rpx items-center mt-50rpx mx-20rpx">
-        <view class="px-30rpx py-16rpx rounded-sm bg-gray-500 bg-opacity-10" @click="last"
-          :style="{ opacity: lastFlag ? '1' : '.5' }">
+        <view
+          class="px-30rpx py-16rpx rounded-sm bg-gray-500 bg-opacity-10"
+          @click="last"
+          :style="{ opacity: lastFlag ? '1' : '.5' }"
+        >
           <u-icon name="play-left-fill" size="10" color="#6C727F"></u-icon>
         </view>
         <view>
           <text class="text-30rpx text-gray-500">{{ year }}</text>
         </view>
-        <view class="px-30rpx py-16rpx rounded-sm bg-gray-500 bg-opacity-10" @click="next"
-          :style="{ opacity: nextFlag ? '1' : '.5' }">
+        <view
+          class="px-30rpx py-16rpx rounded-sm bg-gray-500 bg-opacity-10"
+          @click="next"
+          :style="{ opacity: nextFlag ? '1' : '.5' }"
+        >
           <u-icon name="play-right-fill" size="10" color="#6C727F"></u-icon>
         </view>
       </view>
 
-      <view :class="[
-        `grid grid-cols-5 mx-20rpx gap-30rpx mt-50rpx`,
-        `${className}`
-      ]">
-        <view :class="[
-          `h-80rpx rounded-md flex justify-center items-center`,
-          activeMonth?.year === item.year && activeMonth?.month === item.month ? 'bg-emerald-500 bg-opacity-10 text-emerald-600' : 'bg-white'
-        ]" v-for="(item, i) in monthArr" :key="i" :style="{ opacity: item.disabled ? '.3' : '1' }"
-          @click="monthClick(item)">
+      <view :class="[`grid grid-cols-5 mx-20rpx gap-30rpx mt-50rpx`, `${className}`]">
+        <view
+          :class="[
+            `h-80rpx rounded-md flex justify-center items-center`,
+            activeMonth?.year === item.year && activeMonth?.month === item.month
+              ? 'bg-emerald-500 bg-opacity-10 text-emerald-600'
+              : 'bg-white'
+          ]"
+          v-for="(item, i) in monthArr"
+          :key="i"
+          :style="{ opacity: item.disabled ? '.3' : '1' }"
+          @click="monthClick(item)"
+        >
           <text class="text-24rpx">{{ item.month }}</text>
         </view>
       </view>
@@ -50,12 +66,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useSettingStore } from '@/store/setting';
-import { ref, onMounted } from 'vue';
-import dayjs from 'dayjs';
+import { useSettingStore } from '@/store/setting'
+import { ref, onMounted } from 'vue'
+import dayjs from 'dayjs'
 
 const setting = useSettingStore()
-let year = ref<number>(2023)
+let year = ref<number>(Number(dayjs().format('YYYY')))
 let activeMonth = ref<Month>()
 let nextFlag = ref<boolean>(false)
 let lastFlag = ref<boolean>(false)
@@ -80,7 +96,6 @@ const showHandle = (yearAndMonth: string) => {
   show.value = true
 }
 
-
 const monthClick = (item: Month) => {
   if (item.disabled) return
   activeMonth.value = item
@@ -95,7 +110,7 @@ const closeHandle = () => {
 const last = () => {
   if (!lastFlag.value) return
   className.value = 'animate-last-out'
-  setTimeout(() => className.value = 'animate-last-in', 100)
+  setTimeout(() => (className.value = 'animate-last-in'), 100)
   year.value -= 1
 
   yearChange()
@@ -104,7 +119,7 @@ const last = () => {
 const next = () => {
   if (!nextFlag.value) return
   className.value = 'animate-next-out'
-  setTimeout(() => className.value = 'animate-next-in', 100)
+  setTimeout(() => (className.value = 'animate-next-in'), 100)
   year.value += 1
 
   yearChange()
