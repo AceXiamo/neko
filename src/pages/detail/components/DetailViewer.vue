@@ -12,9 +12,9 @@
     <view class="flex flex-col">
       <view
         class="my-50rpx font-bold text-center"
-        :style="{ color: recordStore.data.recordType === 0 ? '#DD524C' : '#55B685' }"
+        :style="{ color: recordStore.data.recordType === 1 ? '#DD524C' : '#55B685' }"
       >
-        <text class="text-40rpx">{{ recordStore.data.recordType === 0 ? '+' : '-' }}</text>
+        <text class="text-40rpx">{{ recordStore.data.recordType === 1 ? '+' : '-' }}</text>
         <text class="text-40rpx ml-10rpx">{{ recordStore.data.price }}</text>
         <text class="text-24rpx ml-10rpx">元</text>
       </view>
