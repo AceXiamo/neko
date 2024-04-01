@@ -1,5 +1,5 @@
 <template>
-  <view class="flex flex-col bg-gray-100 min-h-screen">
+  <view class="flex flex-col bg-gray-100 min-h-screen overflow-x-hidden">
 
     <Head :title="show === 'view' ? '详情' : '编辑'"></Head>
     <view class="flex flex-col flex-auto pt-20rpx">
